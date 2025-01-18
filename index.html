@@ -169,6 +169,15 @@
         function closeModal() {
             document.getElementById('catalogModal').style.display = 'none';
         }
+
+        // Optional: Close the modal when clicking outside the content
+        window.onclick = function(event) {
+            const modal = document.getElementById('catalogModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
     </script>
 </body>
 </html>
+
