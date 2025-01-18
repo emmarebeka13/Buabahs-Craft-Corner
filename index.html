@@ -6,7 +6,7 @@
     <title>Buabah's Craft Corner</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background: linear-gradient(to bottom, #f0f8ff, #ffe4e1);
@@ -16,23 +16,19 @@
         header {
             background-color: #8a2be2;
             color: white;
-            padding: 2rem;
+            padding: 1rem;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-        header p {
-            font-size: 1.2rem;
         }
         nav {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             background-color: #5a189a;
-            padding: 1rem;
+            padding: 0.5rem;
             flex-wrap: wrap;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
         }
         nav a {
             color: white;
@@ -48,6 +44,7 @@
         .container {
             padding: 3rem 2rem;
             text-align: center;
+            margin-top: 60px;
         }
         footer {
             background-color: #8a2be2;
@@ -58,65 +55,13 @@
             bottom: 0;
             width: 100%;
         }
-        /* Modal styles */
-        .catalog-modal, .contact-modal, .order-modal, .other-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 3rem;
-        }
-        .modal-content {
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 2rem;
-            max-width: 80%;
-            width: auto;
-            height: 80%;
-            overflow-y: scroll;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            position: relative;
-        }
-        .close-btn {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: #5a189a;
-            cursor: pointer;
-        }
-        .catalog-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
-            padding: 1rem;
-        }
-        .product {
-            text-align: center;
-            background-color: #fff;
-            padding: 1rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
         .catalog-section img {
-            max-width: 300px; 
-            width: 100%; 
-            height: auto; 
+            max-width: 200px;
+            width: 100%;
+            height: auto;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin: 1rem 0;
-            transition: transform 0.3s ease;
-        }
-        .catalog-section img:hover {
-            transform: scale(1.05);
+            margin: 1rem;
         }
         .button {
             padding: 0.5rem 1rem;
@@ -131,31 +76,65 @@
         .button:hover {
             background-color: #7b2cbf;
         }
-        .order-summary {
-            text-align: left;
-            margin-top: 20px;
+        .menu {
+            display: flex;
+            justify-content: flex-start;
+            padding: 1rem;
+            width: 100%;
         }
-        .error {
-            color: red;
-            font-size: 1rem;
+        .menu a {
+            margin-right: 1.5rem;
         }
-        .clear-btn, .cancel-btn, .submit-btn {
-            margin: 10px;
-            padding: 1rem 2rem;
-            font-size: 1rem;
-            cursor: pointer;
+        .menu-section {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
         }
-        .clear-btn {
+        /* Pop-up Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+        }
+        .modal-content {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 90%;
+            width: 80%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        .modal-content img {
+            max-width: 100%;
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .modal-content h2 {
+            margin: 1rem 0 0.5rem;
+        }
+        .modal-content p {
+            margin: 0.5rem 0;
+        }
+        .modal .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 0.5rem;
             background-color: #ff4d4d;
             color: white;
-        }
-        .cancel-btn {
-            background-color: #ccc;
-            color: white;
-        }
-        .submit-btn {
-            background-color: #4CAF50;
-            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
         }
         /* Mobile responsiveness */
         @media (max-width: 768px) {
@@ -165,9 +144,6 @@
             header h1 {
                 font-size: 1.5rem;
             }
-            header p {
-                font-size: 1rem;
-            }
             nav {
                 flex-direction: column;
                 align-items: center;
@@ -176,173 +152,180 @@
                 margin: 0.5rem 0;
                 font-size: 1.2rem;
             }
-            .container {
-                padding: 1.5rem;
-            }
-            .button {
-                font-size: 1rem;
-                padding: 0.6rem 1.2rem;
-            }
-            footer {
-                padding: 0.5rem;
+            .catalog-section img {
+                max-width: 120px;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Buabah's Craft Corner</h1>
-        <p>Your one-stop shop for unique and beautiful crafts!</p>
-    </header>
 
-    <nav>
-        <a href="javascript:void(0);" onclick="openCatalogModal()">Full Catalog</a>
-        <a href="javascript:void(0);" onclick="openOtherModal('about-me')">All About Me</a>
-        <a href="javascript:void(0);" onclick="openOtherModal('quilted')">Quilted</a>
-        <a href="javascript:void(0);" onclick="openOtherModal('sewn-goods')">Sewn Goods</a>
-        <a href="javascript:void(0);" onclick="openOtherModal('household-goods')">Household Goods</a>
-        <a href="javascript:void(0);" onclick="openOtherModal('christmas-nook')">Christmas Nook</a>
-        <a href="javascript:void(0);" onclick="openOtherModal('kids-corner')">Kids Corner</a>
-        <a href="javascript:void(0);" onclick="openOtherModal('custom-craft')">Custom Craft Inquiry</a>
-    </nav>
+<header>
+    <h1>Buabah's Craft Corner</h1>
+    <p>Your one-stop shop for unique and beautiful crafts!</p>
+</header>
 
-    <div class="container">
-        <section id="catalog" class="catalog-section">
-            <h2>Featured Products</h2>
-            <p>Click the menu items above to explore our collections!</p>
-        </section>
-    </div>
+<nav>
+    <a href="javascript:void(0);" onclick="openCatalogModal()">Full Catalog</a>
+    <a href="javascript:void(0);" onclick="openOrderModal()">Order</a>
+    <a href="javascript:void(0);" onclick="openContactModal()">Contact</a>
+    <a href="javascript:void(0);" onclick="openAllAboutMeModal()">All About Me</a>
+    <a href="javascript:void(0);" onclick="openQuiltedModal()">Quilted</a>
+    <a href="javascript:void(0);" onclick="openSewnGoodsModal()">Sewn Goods</a>
+    <a href="javascript:void(0);" onclick="openHouseholdGoodsModal()">Household Goods</a>
+    <a href="javascript:void(0);" onclick="openChristmasNookModal()">Christmas Nook</a>
+    <a href="javascript:void(0);" onclick="openKidsCornerModal()">Kids Corner</a>
+    <a href="javascript:void(0);" onclick="openCustomCraftModal()">Yea, I Made That Custom Craft Inquiry</a>
+</nav>
 
-    <footer>
-        <p>&copy; 2025 Buabah's Craft Corner | Payment Methods: Venmo, Square</p>
-    </footer>
+<div class="container">
+    <section id="catalog" class="catalog-section">
+        <h2>Featured Crafts</h2>
+        <p>Explore our full catalog:</p>
+        <div class="menu-section">
+            <div class="product">
+                <img src="452258165_122192472710033273_6474129997334732477_n.jpg" alt="Holiday Placemat and Coaster Set">
+                <p><strong>Holiday Placemat and Coaster Set</strong></p>
+                <p>Price: $40</p>
+                <button class="button">Add to Order</button>
+            </div>
+            <div class="product">
+                <img src="suzies.jpg" alt="Suzies">
+                <p><strong>Suzies</strong></p>
+                <p>Price: $5</p>
+                <button class="button">Add to Order</button>
+            </div>
+            <div class="product">
+                <img src="advent calendar.jpg" alt="Handmade Advent Calendar">
+                <p><strong>Handmade Advent Calendar</strong></p>
+                <p>Price: $40</p>
+                <button class="button">Add to Order</button>
+            </div>
+            <div class="product">
+                <img src="rersuablebag.jpg" alt="Quilted Reusable Bag">
+                <p><strong>Quilted Reusable Bag</strong></p>
+                <p>Price: $10</p>
+                <button class="button">Add to Order</button>
+            </div>
+            <div class="product">
+                <img src="icrcream pint coozy.jpg" alt="Ice Cream Pint Coozie">
+                <p><strong>Ice Cream Pint Coozie</strong></p>
+                <p>Price: $5</p>
+                <button class="button">Add to Order</button>
+            </div>
+        </div>
+    </section>
+</div>
 
-    <!-- Modal Pop-ups (Catalog and other categories) -->
+<footer>
+    <p>&copy; 2025 Buabah's Craft Corner | Payment Methods: Venmo, Square</p>
+</footer>
 
-    <div class="catalog-modal" id="catalogModal">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeCatalogModal()">×</button>
-            <h2>Full Catalog</h2>
-            <!-- Repeat similar sections for other categories as needed -->
-            <div class="catalog-section">
-                <!-- Your catalog items go here -->
+<!-- Modal: Catalog -->
+<div class="modal" id="catalogModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeCatalogModal()">X</span>
+        <h2>Full Catalog</h2>
+        <div class="menu-section">
+            <div class="product">
+                <img src="452258165_122192472710033273_6474129997334732477_n.jpg" alt="Holiday Placemat and Coaster Set">
+                <p><strong>Holiday Placemat and Coaster Set</strong></p>
+                <p>Price: $40</p>
+                <button class="button">Add to Order</button>
+            </div>
+            <div class="product">
+                <img src="suzies.jpg" alt="Suzies">
+                <p><strong>Suzies</strong></p>
+                <p>Price: $5</p>
+                <button class="button">Add to Order</button>
+            </div>
+            <div class="product">
+                <img src="advent calendar.jpg" alt="Handmade Advent Calendar">
+                <p><strong>Handmade Advent Calendar</strong></p>
+                <p>Price: $40</p>
+                <button class="button">Add to Order</button>
+            </div>
+            <div class="product">
+                <img src="rersuablebag.jpg" alt="Quilted Reusable Bag">
+                <p><strong>Quilted Reusable Bag</strong></p>
+                <p>Price: $10</p>
+                <button class="button">Add to Order</button>
+            </div>
+            <div class="product">
+                <img src="icrcream pint coozy.jpg" alt="Ice Cream Pint Coozie">
+                <p><strong>Ice Cream Pint Coozie</strong></p>
+                <p>Price: $5</p>
+                <button class="button">Add to Order</button>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="other-modal" id="aboutMeModal">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeOtherModal('about-me')">×</button>
-            <h2>All About Me</h2>
-            <p>Here's a little about me...</p>
-        </div>
+<!-- Modal: Order -->
+<div class="modal" id="orderModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeOrderModal()">X</span>
+        <h2>Order Summary</h2>
+        <div id="order-summary"></div>
+        <p class="error" id="error-message"></p>
+        <label for="customer-name">Customer Name:</label>
+        <input type="text" id="customer-name" placeholder="Your Name" />
+        <label for="phone-number">Phone Number:</label>
+        <input type="tel" id="phone-number" placeholder="Your Phone Number" />
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Your Email" />
+        <textarea id="special-instructions" placeholder="Special Instructions"></textarea>
+        <br />
+        <button class="clear-btn" onclick="clearOrder()">Clear Order</button>
+        <button class="cancel-btn" onclick="closeOrderModal()">Cancel</button>
+        <button class="submit-btn" onclick="submitOrder()">Submit Order</button>
     </div>
+</div>
 
-    <!-- Add more modals for other categories (quilted, sewn goods, etc.) -->
-
-    <!-- Order Modal -->
-    <div class="order-modal" id="orderModal">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeOrderModal()">×</button>
-            <h2>Order Summary</h2>
-            <div id="order-summary" class="order-summary"></div>
-            <p class="error" id="error-message"></p>
-            <label for="customer-name">Customer Name:</label>
-            <input type="text" id="customer-name" placeholder="Your Name" />
-            <label for="phone-number">Phone Number:</label>
-            <input type="tel" id="phone-number" placeholder="Your Phone Number" />
-            <label for="email">Email:</label>
-            <input type="email" id="email" placeholder="Your Email" />
-            <textarea id="special-instructions" placeholder="Special Instructions"></textarea>
-            <br />
-            <button class="clear-btn" onclick="clearOrder()">Clear Order</button>
-            <button class="cancel-btn" onclick="closeOrderModal()">Cancel</button>
-            <button class="submit-btn" onclick="submitOrder()">Submit Order</button>
-        </div>
+<!-- Modal: Contact -->
+<div class="modal" id="contactModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeContactModal()">X</span>
+        <h2>Contact Us</h2>
+        <p>Owner: Mary Hammond</p>
+        <p>Email: <a href="mailto:EmmaRebeka13@hotmail.com">EmmaRebeka13@hotmail.com</a></p>
+        <p>Phone: <a href="tel:9803333194">980-333-3194</a></p>
     </div>
+</div>
 
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    <script>
-        emailjs.init('your_user_id'); // Replace with your EmailJS user ID
+<script>
+    function openCatalogModal() {
+        document.getElementById('catalogModal').style.display = 'flex';
+    }
 
-        let orderItems = [];
-        
-        function addToOrder(name, price, quantity) {
-            orderItems.push({ name, price, quantity: parseInt(quantity) });
-            updateOrderSummary();
-        }
+    function closeCatalogModal() {
+        document.getElementById('catalogModal').style.display = 'none';
+    }
 
-        function updateOrderSummary() {
-            const orderSummaryDiv = document.getElementById('order-summary');
-            orderSummaryDiv.innerHTML = '';
-            let totalPrice = 0;
-            orderItems.forEach(item => {
-                const itemSummary = document.createElement('div');
-                itemSummary.innerHTML = `${item.name} x ${item.quantity} - $${item.price * item.quantity}`;
-                orderSummaryDiv.appendChild(itemSummary);
-                totalPrice += item.price * item.quantity;
-            });
-            orderSummaryDiv.innerHTML += `<strong>Total Price: $${totalPrice}</strong>`;
-        }
+    function openOrderModal() {
+        document.getElementById('orderModal').style.display = 'flex';
+    }
 
-        function openCatalogModal() {
-            document.getElementById('catalogModal').style.display = 'flex';
-        }
+    function closeOrderModal() {
+        document.getElementById('orderModal').style.display = 'none';
+    }
 
-        function closeCatalogModal() {
-            document.getElementById('catalogModal').style.display = 'none';
-        }
+    function openContactModal() {
+        document.getElementById('contactModal').style.display = 'flex';
+    }
 
-        function openOtherModal(category) {
-            document.getElementById(category + 'Modal').style.display = 'flex';
-        }
+    function closeContactModal() {
+        document.getElementById('contactModal').style.display = 'none';
+    }
 
-        function closeOtherModal(category) {
-            document.getElementById(category + 'Modal').style.display = 'none';
-        }
+    function submitOrder() {
+        // Implement EmailJS logic here or send an email as required
+    }
 
-        function openOrderModal() {
-            document.getElementById('orderModal').style.display = 'flex';
-        }
+    function clearOrder() {
+        // Implement clearing logic here
+    }
+</script>
 
-        function closeOrderModal() {
-            document.getElementById('orderModal').style.display = 'none';
-        }
-
-        function clearOrder() {
-            orderItems = [];
-            updateOrderSummary();
-        }
-
-        function submitOrder() {
-            const customerName = document.getElementById('customer-name').value;
-            const phoneNumber = document.getElementById('phone-number').value;
-            const email = document.getElementById('email').value;
-            
-            // Clear the error message if required fields are filled
-            document.getElementById('error-message').textContent = '';
-
-            if (!customerName || (!phoneNumber && !email)) {
-                document.getElementById('error-message').textContent = 'Name and either Phone Number or Email are required!';
-            } else {
-                const orderDetails = {
-                    customerName,
-                    phoneNumber,
-                    email,
-                    orderItems: orderItems.map(item => `${item.name} x ${item.quantity} - $${item.price * item.quantity}`).join('\n'),
-                    totalPrice: orderItems.reduce((total, item) => total + item.price * item.quantity, 0)
-                };
-
-                // Send the email via EmailJS
-                emailjs.send('service_id', 'template_id', orderDetails)
-                    .then(function(response) {
-                        alert('Order submitted successfully!');
-                        closeOrderModal();
-                    }, function(error) {
-                        console.log('Email sending error:', error);
-                    });
-            }
-        }
-    </script>
 </body>
 </html>
