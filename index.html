@@ -6,7 +6,7 @@
     <title>Buabah's Craft Corner</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
             background: linear-gradient(to bottom, #f0f8ff, #ffe4e1);
@@ -16,14 +16,22 @@
         header {
             background-color: #8a2be2;
             color: white;
-            padding: 1rem;
+            padding: 2rem;
             text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.2rem;
         }
         nav {
             display: flex;
             justify-content: center;
             background-color: #5a189a;
-            padding: 0.5rem;
+            padding: 1rem;
             flex-wrap: wrap;
         }
         nav a {
@@ -38,7 +46,7 @@
             text-decoration: underline;
         }
         .container {
-            padding: 2rem;
+            padding: 3rem 2rem;
             text-align: center;
         }
         footer {
@@ -60,14 +68,17 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
+            padding-top: 3rem;
         }
         .modal-content {
             background-color: #fff;
             border-radius: 10px;
             padding: 2rem;
-            max-width: 500px;
-            width: 90%;
+            max-width: 80%;
+            width: auto;
+            height: 80%;
+            overflow-y: scroll;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             position: relative;
@@ -246,20 +257,21 @@
         </div>
     </div>
 
-    <!-- Modal: Contact -->
+    <!-- Modal: Contact Information -->
     <div class="contact-modal" id="contactModal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeContactModal()">×</button>
-            <h2>Contact Information</h2>
-            <p><strong>Owner:</strong> Mary Hammond</p>
-            <p><strong>Email:</strong> <a href="mailto:EmmaRebeka13@hotmail.com">EmmaRebeka13@hotmail.com</a></p>
-            <p><strong>Phone Number:</strong> <a href="tel:9803333194">980-333-3194</a></p>
+            <h2>Contact Us</h2>
+            <p>Owner: Mary Hammond</p>
+            <p>Email: <a href="mailto:EmmaRebeka13@hotmail.com">EmmaRebeka13@hotmail.com</a></p>
+            <p>Phone: <a href="tel:9803333194">980-333-3194</a></p>
         </div>
     </div>
 
     <!-- Modal: Order -->
     <div class="order-modal" id="orderModal">
         <div class="modal-content">
+            <button class="close-btn" onclick="closeOrderModal()">×</button>
             <h2>Order Summary</h2>
             <div id="order-summary" class="order-summary"></div>
             <p class="error" id="error-message"></p>
@@ -277,7 +289,10 @@
         </div>
     </div>
 
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script>
+        emailjs.init('your_user_id'); // Replace with your EmailJS user ID
+        
         let orderItems = [];
         
         function addToOrder(name, price, quantity) {
@@ -335,9 +350,22 @@
             if (!customerName || (!phoneNumber && !email)) {
                 document.getElementById('error-message').textContent = 'Name and either Phone Number or Email are required!';
             } else {
-                // Submit the order logic here (you can integrate with a back-end if needed)
-                alert('Order submitted successfully!');
-                closeOrderModal();
+                const orderDetails = {
+                    customerName,
+                    phoneNumber,
+                    email,
+                    orderItems: orderItems.map(item => `${item.name} x ${item.quantity} - $${item.price * item.quantity}`).join('\n'),
+                    totalPrice: orderItems.reduce((total, item) => total + item.price * item.quantity, 0)
+                };
+                
+                // Send the email via EmailJS
+                emailjs.send('service_id', 'template_id', orderDetails)
+                    .then(function(response) {
+                        alert('Order submitted successfully!');
+                        closeOrderModal();
+                    }, function(error) {
+                        console.log('Email sending error:', error);
+                    });
             }
         }
     </script>
