@@ -50,13 +50,30 @@
             bottom: 0;
             width: 100%;
         }
+        .catalog-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+        .product {
+            text-align: center;
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
         .catalog-section img {
-            max-width: 100%;
-            width: 100%;
-            height: auto;
+            max-width: 300px; /* Set a max width to make the images smaller */
+            width: 100%; /* Ensures they are responsive and maintain aspect ratio */
+            height: auto; /* Maintains the aspect ratio of the images */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             margin: 1rem 0;
+            transition: transform 0.3s ease; /* Add a smooth zoom effect on hover */
+        }
+        .catalog-section img:hover {
+            transform: scale(1.05); /* Slight zoom effect on hover */
         }
         .button {
             padding: 0.5rem 1rem;
@@ -162,9 +179,6 @@
             }
             .container {
                 padding: 1.5rem;
-            }
-            .catalog-section img {
-                max-width: 100%;
             }
             .button {
                 font-size: 1rem;
@@ -314,4 +328,3 @@
     </script>
 </body>
 </html>
-
