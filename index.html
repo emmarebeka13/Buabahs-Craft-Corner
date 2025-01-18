@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buabah's Craft Corner</title>
     <style>
+        /* Previous styles remain the same until catalog-product */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -48,7 +49,98 @@
 
         .container {
             padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .catalog-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        .catalog-product {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             text-align: center;
+        }
+
+        .catalog-product img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .quantity-selector input {
+            width: 50px;
+            text-align: center;
+            margin: 0 0.5rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            margin: 10vh auto;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        #order-summary {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+
+        .button {
+            background: #5a189a;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+
+        .button:hover {
+            background: #7b2cbf;
         }
 
         footer {
@@ -60,132 +152,6 @@
             bottom: 0;
             width: 100%;
         }
-
-        .catalog-modal, .order-modal, .contact-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 2rem;
-            max-width: 800px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            overflow-y: auto;
-            max-height: 90%;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .close-btn {
-            cursor: pointer;
-            background-color: transparent;
-            border: none;
-            font-size: 1.5rem;
-            color: #333;
-        }
-
-        .catalog-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            gap: 20px;
-        }
-
-        .catalog-product {
-            text-align: center;
-            width: 200px;
-            margin: 10px;
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 8px;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .catalog-product img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-
-        .button {
-            padding: 0.5rem 1rem;
-            background-color: #5a189a;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 1rem;
-            margin-top: 10px;
-        }
-
-        .button:hover {
-            background-color: #7b2cbf;
-        }
-
-        /* Mobile responsiveness */
-        @media (max-width: 768px) {
-            body {
-                font-size: 14px;
-            }
-
-            header h1 {
-                font-size: 1.5rem;
-            }
-
-            header p {
-                font-size: 1rem;
-            }
-
-            nav {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            nav a {
-                margin: 0.5rem 0;
-                font-size: 1.2rem;
-            }
-
-            .container {
-                padding: 1.5rem;
-            }
-
-            .catalog-container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .catalog-product {
-                width: 100%;
-                max-width: 300px;
-            }
-
-            .button {
-                font-size: 1rem;
-                padding: 0.6rem 1.2rem;
-            }
-
-            footer {
-                padding: 0.5rem;
-            }
-        }
     </style>
 </head>
 <body>
@@ -195,207 +161,265 @@
     </header>
 
     <nav>
-        <a href="javascript:void(0);" onclick="openCatalogModal()">Full Catalog</a>
-        <a href="javascript:void(0);" onclick="openAboutMeModal()">All About Me</a>
-        <a href="javascript:void(0);" onclick="openQuiltedModal()">Quilted</a>
-        <a href="javascript:void(0);" onclick="openSewnGoodsModal()">Sewn Goods</a>
-        <a href="javascript:void(0);" onclick="openHouseholdGoodsModal()">Household Goods</a>
-        <a href="javascript:void(0);" onclick="openChristmasNookModal()">Christmas Nook</a>
-        <a href="javascript:void(0);" onclick="openKidsCornerModal()">Kids Corner</a>
-        <a href="javascript:void(0);" onclick="openCustomCraftModal()">Yea, I Made That Custom Craft Inquiry</a>
-        <a href="javascript:void(0);" onclick="openOrderModal()">Order</a>
-        <a href="javascript:void(0);" onclick="openContactModal()">Contact</a>
+        <a href="#" onclick="openModal('catalogModal')">Full Catalog</a>
+        <a href="#" onclick="openModal('aboutModal')">All About Me</a>
+        <a href="#" onclick="openModal('quiltedModal')">Quilted</a>
+        <a href="#" onclick="openModal('sewnModal')">Sewn Goods</a>
+        <a href="#" onclick="openModal('householdModal')">Household Goods</a>
+        <a href="#" onclick="openModal('christmasModal')">Christmas Nook</a>
+        <a href="#" onclick="openModal('kidsModal')">Kids Corner</a>
+        <a href="#" onclick="openModal('customModal')">Yea, I Made That Custom Craft Inquiry</a>
+        <a href="#" onclick="openModal('orderModal')">Order</a>
+        <a href="#" onclick="openModal('contactModal')">Contact</a>
     </nav>
 
     <div class="container">
-        <!-- Featured Products Section -->
-        <section class="catalog-section">
-            <h2>Featured Products</h2>
+        <h2>Featured Products</h2>
+        <div class="catalog-container">
+            <div class="catalog-product">
+                <img src="/api/placeholder/400/320" alt="Suzies">
+                <h3>Suzies</h3>
+                <p>Price: $5</p>
+                <div class="quantity-selector">
+                    <button onclick="decrementQuantity('suzies-qty')">-</button>
+                    <input type="number" id="suzies-qty" value="1" min="1">
+                    <button onclick="incrementQuantity('suzies-qty')">+</button>
+                </div>
+                <button class="button" onclick="addToOrder('Suzies', 5, document.getElementById('suzies-qty').value)">
+                    Add to Order
+                </button>
+            </div>
+            <div class="catalog-product">
+                <img src="/api/placeholder/400/320" alt="Handmade Advent Calendar">
+                <h3>Handmade Advent Calendar</h3>
+                <p>Price: $40</p>
+                <div class="quantity-selector">
+                    <button onclick="decrementQuantity('calendar-qty')">-</button>
+                    <input type="number" id="calendar-qty" value="1" min="1">
+                    <button onclick="incrementQuantity('calendar-qty')">+</button>
+                </div>
+                <button class="button" onclick="addToOrder('Handmade Advent Calendar', 40, document.getElementById('calendar-qty').value)">
+                    Add to Order
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="catalogModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('catalogModal')">&times;</button>
+            <h2>Full Catalog</h2>
             <div class="catalog-container">
+                <!-- Duplicate Featured Products -->
                 <div class="catalog-product">
-                    <img src="suzies.jpg" alt="Suzies">
-                    <p><strong>Suzies</strong></p>
+                    <img src="/api/placeholder/400/320" alt="Suzies">
+                    <h3>Suzies</h3>
                     <p>Price: $5</p>
-                    <button class="button" onclick="addToOrder('Suzies', 5, 1)">Add to Order</button>
+                    <div class="quantity-selector">
+                        <button onclick="decrementQuantity('suzies-catalog-qty')">-</button>
+                        <input type="number" id="suzies-catalog-qty" value="1" min="1">
+                        <button onclick="incrementQuantity('suzies-catalog-qty')">+</button>
+                    </div>
+                    <button class="button" onclick="addToOrder('Suzies', 5, document.getElementById('suzies-catalog-qty').value)">
+                        Add to Order
+                    </button>
                 </div>
                 <div class="catalog-product">
-                    <img src="advent-calendar.jpg" alt="Handmade Advent Calendar">
-                    <p><strong>Handmade Advent Calendar</strong></p>
+                    <img src="/api/placeholder/400/320" alt="Handmade Advent Calendar">
+                    <h3>Handmade Advent Calendar</h3>
                     <p>Price: $40</p>
-                    <button class="button" onclick="addToOrder('Handmade Advent Calendar', 40, 1)">Add to Order</button>
+                    <div class="quantity-selector">
+                        <button onclick="decrementQuantity('calendar-catalog-qty')">-</button>
+                        <input type="number" id="calendar-catalog-qty" value="1" min="1">
+                        <button onclick="incrementQuantity('calendar-catalog-qty')">+</button>
+                    </div>
+                    <button class="button" onclick="addToOrder('Handmade Advent Calendar', 40, document.getElementById('calendar-catalog-qty').value)">
+                        Add to Order
+                    </button>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('orderModal')">&times;</button>
+            <h2>Your Order</h2>
+            <div id="order-summary"></div>
+            <form id="order-form">
+                <div>
+                    <label for="customer-name">Name:</label>
+                    <input type="text" id="customer-name" required>
+                </div>
+                <div>
+                    <label for="customer-email">Email:</label>
+                    <input type="email" id="customer-email" required>
+                </div>
+                <div>
+                    <label for="customer-phone">Phone:</label>
+                    <input type="tel" id="customer-phone">
+                </div>
+                <div>
+                    <label for="special-instructions">Special Instructions:</label>
+                    <textarea id="special-instructions"></textarea>
+                </div>
+                <button type="button" class="button" onclick="clearOrder()">Clear Order</button>
+                <button type="submit" class="button">Submit Order</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Additional Modals -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('aboutModal')">&times;</button>
+            <h2>All About Me</h2>
+            <p>Content about the creator...</p>
+        </div>
+    </div>
+
+    <div id="quiltedModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('quiltedModal')">&times;</button>
+            <h2>Quilted Items</h2>
+            <p>Quilted products content...</p>
+        </div>
+    </div>
+
+    <div id="sewnModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('sewnModal')">&times;</button>
+            <h2>Sewn Goods</h2>
+            <p>Sewn goods content...</p>
+        </div>
+    </div>
+
+    <div id="householdModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('householdModal')">&times;</button>
+            <h2>Household Goods</h2>
+            <p>Household goods content...</p>
+        </div>
+    </div>
+
+    <div id="christmasModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('christmasModal')">&times;</button>
+            <h2>Christmas Nook</h2>
+            <p>Christmas items content...</p>
+        </div>
+    </div>
+
+    <div id="kidsModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('kidsModal')">&times;</button>
+            <h2>Kids Corner</h2>
+            <p>Kids items content...</p>
+        </div>
+    </div>
+
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('customModal')">&times;</button>
+            <h2>Custom Craft Inquiry</h2>
+            <p>Custom craft inquiry content...</p>
+        </div>
+    </div>
+
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('contactModal')">&times;</button>
+            <h2>Contact Us</h2>
+            <p>Contact information...</p>
+        </div>
     </div>
 
     <footer>
         <p>&copy; 2025 Buabah's Craft Corner | Payment Methods: Venmo, Square</p>
     </footer>
 
-    <!-- Full Catalog Modal -->
-    <div class="catalog-modal" id="catalogModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Full Catalog</h2>
-                <button class="close-btn" onclick="closeCatalogModal()">X</button>
-            </div>
-            <div class="catalog-container">
-                <!-- Full Catalog Products Here -->
-                <!-- Example Items -->
-                <div class="catalog-product">
-                    <img src="holiday-placemat.jpg" alt="Holiday Placemat and Coaster Set">
-                    <p><strong>Holiday Placemat and Coaster Set</strong></p>
-                    <p>Price: $40</p>
-                    <button class="button" onclick="addToOrder('Holiday Placemat and Coaster Set', 40, 1)">Add to Order</button>
-                </div>
-                <div class="catalog-product">
-                    <img src="quilted-bag.jpg" alt="Quilted Reusable Bag">
-                    <p><strong>Quilted Reusable Bag</strong></p>
-                    <p>Price: $10</p>
-                    <button class="button" onclick="addToOrder('Quilted Reusable Bag', 10, 1)">Add to Order</button>
-                </div>
-                <div class="catalog-product">
-                    <img src="ice-cream-coozie.jpg" alt="Ice Cream Pint Coozie">
-                    <p><strong>Ice Cream Pint Coozie</strong></p>
-                    <p>Price: $5</p>
-                    <button class="button" onclick="addToOrder('Ice Cream Pint Coozie', 5, 1)">Add to Order</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal: About Me -->
-    <div class="about-me-modal" id="aboutMeModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>About Me</h2>
-                <button class="close-btn" onclick="closeAboutMeModal()">X</button>
-            </div>
-            <p>Information about the creator of Buabah's Craft Corner.</p>
-        </div>
-    </div>
-
-    <!-- Modal: Custom Craft Inquiry -->
-    <div class="custom-craft-modal" id="customCraftModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Yea, I Made That Custom Craft Inquiry</h2>
-                <button class="close-btn" onclick="closeCustomCraftModal()">X</button>
-            </div>
-            <p>Information on how to inquire about custom crafted items.</p>
-        </div>
-    </div>
-
-    <!-- Modal: Order -->
-    <div class="order-modal" id="orderModal">
-        <div class="modal-content">
-            <h2>Order Summary</h2>
-            <div id="order-summary" class="order-summary"></div>
-            <p class="error" id="error-message"></p>
-            <label for="customer-name">Customer Name:</label>
-            <input type="text" id="customer-name" placeholder="Your Name" />
-            <label for="phone-number">Phone Number:</label>
-            <input type="tel" id="phone-number" placeholder="Your Phone Number" />
-            <label for="email">Email:</label>
-            <input type="email" id="email" placeholder="Your Email" />
-            <textarea id="special-instructions" placeholder="Special Instructions"></textarea>
-            <br />
-            <button class="clear-btn" onclick="clearOrder()">Clear Order</button>
-            <button class="cancel-btn" onclick="closeOrderModal()">Cancel</button>
-            <button class="submit-btn" onclick="submitOrder()">Submit Order</button>
-        </div>
-    </div>
-
-    <!-- Modal: Contact Information -->
-    <div class="contact-modal" id="contactModal">
-        <div class="modal-content">
-            <h2>Contact Us</h2>
-            <p>Owner: Mary Hammond</p>
-            <p>Email: <a href="mailto:EmmaRebeka13@hotmail.com">EmmaRebeka13@hotmail.com</a></p>
-            <p>Phone Number: <a href="tel:9803333194">980-333-3194</a></p>
-            <button class="close-btn" onclick="closeContactModal()">X</button>
-        </div>
-    </div>
-
     <script>
         let orderItems = [];
 
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function incrementQuantity(inputId) {
+            const input = document.getElementById(inputId);
+            input.value = parseInt(input.value) + 1;
+        }
+
+        function decrementQuantity(inputId) {
+            const input = document.getElementById(inputId);
+            if (parseInt(input.value) > 1) {
+                input.value = parseInt(input.value) - 1;
+            }
+        }
+
         function addToOrder(name, price, quantity) {
-            orderItems.push({ name, price, quantity: parseInt(quantity) });
+            quantity = parseInt(quantity);
+            // Check if item already exists in order
+            const existingItem = orderItems.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                orderItems.push({ name, price, quantity });
+            }
             updateOrderSummary();
+            alert(`Added ${quantity} ${name} to your order!`);
         }
 
         function updateOrderSummary() {
-            const orderSummaryDiv = document.getElementById('order-summary');
-            orderSummaryDiv.innerHTML = '';
-            let totalPrice = 0;
+            const summary = document.getElementById('order-summary');
+            let html = '<h3>Order Items:</h3>';
+            let total = 0;
+            
             orderItems.forEach(item => {
-                const itemSummary = document.createElement('div');
-                itemSummary.innerHTML = `${item.name} x ${item.quantity} - $${item.price * item.quantity}`;
-                orderSummaryDiv.appendChild(itemSummary);
-                totalPrice += item.price * item.quantity;
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                html += `
+                    <div class="order-item">
+                        <p>${item.name} x ${item.quantity} - $${itemTotal}</p>
+                    </div>
+                `;
             });
-            orderSummaryDiv.innerHTML += `<strong>Total Price: $${totalPrice}</strong>`;
-        }
-
-        function openCatalogModal() {
-            document.getElementById('catalogModal').style.display = 'flex';
-        }
-
-        function closeCatalogModal() {
-            document.getElementById('catalogModal').style.display = 'none';
-        }
-
-        function openOrderModal() {
-            document.getElementById('orderModal').style.display = 'flex';
-        }
-
-        function closeOrderModal() {
-            document.getElementById('orderModal').style.display = 'none';
+            
+            html += `<h4>Total: $${total}</h4>`;
+            summary.innerHTML = html;
         }
 
         function clearOrder() {
             orderItems = [];
             updateOrderSummary();
+            alert('Order cleared!');
         }
 
-        function submitOrder() {
-            const customerName = document.getElementById('customer-name').value;
-            const phoneNumber = document.getElementById('phone-number').value;
-            const email = document.getElementById('email').value;
-
-            if (!customerName || (!phoneNumber && !email)) {
-                document.getElementById('error-message').textContent = 'Name and either Phone Number or Email are required!';
-            } else {
-                alert('Order submitted successfully!');
-                closeOrderModal();
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
             }
         }
 
-        function openAboutMeModal() {
-            document.getElementById('aboutMeModal').style.display = 'flex';
-        }
-
-        function closeAboutMeModal() {
-            document.getElementById('aboutMeModal').style.display = 'none';
-        }
-
-        function openCustomCraftModal() {
-            document.getElementById('customCraftModal').style.display = 'flex';
-        }
-
-        function closeCustomCraftModal() {
-            document.getElementById('customCraftModal').style.display = 'none';
-        }
-
-        function openContactModal() {
-            document.getElementById('contactModal').style.display = 'flex';
-        }
-
-        function closeContactModal() {
-            document.getElementById('contactModal').style.display = 'none';
-        }
+        // Form submission
+        document.getElementById('order-form').onsubmit = function(e) {
+            e.preventDefault();
+            if (orderItems.length === 0) {
+                alert('Please add items to your order first!');
+                return;
+            }
+            // Here you would typically send the order to a server
+            alert('Order submitted successfully!');
+            orderItems = [];
+            updateOrderSummary();
+            closeModal('orderModal');
+        };
     </script>
 </body>
 </html>
-
