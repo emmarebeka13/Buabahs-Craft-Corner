@@ -47,8 +47,11 @@
             width: 100%;
         }
         .catalog-section img {
-            width: 300px;
-            border-radius: 10px;
+            max-width: 400px; /* Sets a max width for the image */
+            width: 100%; /* Ensures the image scales responsively */
+            height: auto; /* Maintains aspect ratio */
+            border-radius: 10px; /* Adds rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
             margin: 1rem 0;
         }
         .button {
@@ -86,7 +89,9 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         .modal-content img {
+            max-width: 400px; /* Consistent image size in modal */
             width: 100%;
+            height: auto;
             border-radius: 10px;
         }
         .modal-content h2 {
@@ -122,10 +127,12 @@
     </nav>
 
     <div class="container">
-        <section id="catalog">
+        <section id="catalog" class="catalog-section">
             <h2>Catalog</h2>
             <p>Featured Product:</p>
-            <img src="4452258165_122192472710033273_6474129997334732477_n.jpg" alt="Holiday Placemat and Coaster Set">
+            <img src="452258165_122192472710033273_6474129997334732477_n.jpg" 
+                 alt="Holiday Placemat and Coaster Set" 
+                 onerror="this.src='https://via.placeholder.com/400';">
             <p><strong>Holiday Placemat and Coaster Set</strong></p>
             <p>Price: $40</p>
             <button class="button" onclick="openModal()">View Full Catalog</button>
@@ -151,7 +158,9 @@
     <div class="modal" id="catalogModal">
         <div class="modal-content">
             <h2>Full Catalog</h2>
-            <img src="452258165_122192472710033273_6474129997334732477_n.jpg" alt="Holiday Placemat and Coaster Set">
+            <img src="452258165_122192472710033273_6474129997334732477_n.jpg" 
+                 alt="Holiday Placemat and Coaster Set" 
+                 onerror="this.src='https://via.placeholder.com/400';">
             <p><strong>Holiday Placemat and Coaster Set</strong></p>
             <p>Price: $40</p>
             <p>A beautiful set of holiday-themed placemats and coasters, perfect for your festive table!</p>
@@ -180,4 +189,3 @@
     </script>
 </body>
 </html>
-
