@@ -11,6 +11,7 @@
             padding: 0;
             background: linear-gradient(to bottom, #f0f8ff, #ffe4e1);
             color: #333;
+            line-height: 1.6;
         }
         header {
             background-color: #8a2be2;
@@ -23,12 +24,15 @@
             justify-content: center;
             background-color: #5a189a;
             padding: 0.5rem;
+            flex-wrap: wrap;
         }
         nav a {
             color: white;
             text-decoration: none;
             margin: 0 1rem;
             font-weight: bold;
+            padding: 0.5rem;
+            text-align: center;
         }
         nav a:hover {
             text-decoration: underline;
@@ -47,11 +51,11 @@
             width: 100%;
         }
         .catalog-section img {
-            max-width: 400px; /* Sets a max width for the image */
-            width: 100%; /* Ensures the image scales responsively */
-            height: auto; /* Maintains aspect ratio */
-            border-radius: 10px; /* Adds rounded corners */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+            max-width: 100%;
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             margin: 1rem 0;
         }
         .button {
@@ -67,9 +71,8 @@
         .button:hover {
             background-color: #7b2cbf;
         }
-        /* Modal styles */
-        .modal {
-            display: none; /* Hidden by default */
+        .order-modal, .catalog-modal, .contact-modal {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -89,7 +92,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         .modal-content img {
-            max-width: 400px; /* Consistent image size in modal */
+            max-width: 100%;
             width: 100%;
             height: auto;
             border-radius: 10px;
@@ -112,6 +115,65 @@
         .close-btn:hover {
             background-color: #7b2cbf;
         }
+        .order-summary {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .error {
+            color: red;
+            font-size: 1rem;
+        }
+        .clear-btn, .cancel-btn, .submit-btn {
+            margin: 10px;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .clear-btn {
+            background-color: #ff4d4d;
+            color: white;
+        }
+        .cancel-btn {
+            background-color: #ccc;
+            color: white;
+        }
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+            header h1 {
+                font-size: 1.5rem;
+            }
+            header p {
+                font-size: 1rem;
+            }
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            nav a {
+                margin: 0.5rem 0;
+                font-size: 1.2rem;
+            }
+            .container {
+                padding: 1.5rem;
+            }
+            .catalog-section img {
+                max-width: 100%;
+            }
+            .button {
+                font-size: 1rem;
+                padding: 0.6rem 1.2rem;
+            }
+            footer {
+                padding: 0.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -122,25 +184,49 @@
 
     <nav>
         <a href="#catalog">Catalog</a>
-        <a href="#cart">Cart</a>
+        <a href="javascript:void(0);" onclick="openOrderModal()">Order</a>
         <a href="javascript:void(0);" onclick="openContactModal()">Contact</a>
     </nav>
 
     <div class="container">
         <section id="catalog" class="catalog-section">
             <h2>Catalog</h2>
-            <p>Featured Product:</p>
-            <img src="452258165_122192472710033273_6474129997334732477_n.jpg" 
-                 alt="Holiday Placemat and Coaster Set" 
-                 onerror="this.src='https://via.placeholder.com/400';">
-            <p><strong>Holiday Placemat and Coaster Set</strong></p>
-            <p>Price: $40</p>
-            <button class="button" onclick="openModal()">View Full Catalog</button>
-        </section>
-
-        <section id="cart">
-            <h2>Your Cart</h2>
-            <p>Your cart is currently empty. Start shopping from our catalog!</p>
+            <p>Featured Products:</p>
+            <div class="product">
+                <img src="452258165_122192472710033273_6474129997334732477_n.jpg" alt="Holiday Placemat and Coaster Set">
+                <p><strong>Holiday Placemat and Coaster Set</strong></p>
+                <p>Price: $40</p>
+                <input type="number" id="holiday-quantity" value="1" min="1" />
+                <button class="button" onclick="addToOrder('Holiday Placemat and Coaster Set', 40, document.getElementById('holiday-quantity').value)">Add to Order</button>
+            </div>
+            <div class="product">
+                <img src="https://via.placeholder.com/400" alt="Suzies">
+                <p><strong>Suzies</strong></p>
+                <p>Price: $5</p>
+                <input type="number" id="suzies-quantity" value="1" min="1" />
+                <button class="button" onclick="addToOrder('Suzies', 5, document.getElementById('suzies-quantity').value)">Add to Order</button>
+            </div>
+            <div class="product">
+                <img src="https://via.placeholder.com/400" alt="Handmade Advent Calendar">
+                <p><strong>Handmade Advent Calendar</strong></p>
+                <p>Price: $40</p>
+                <input type="number" id="advent-quantity" value="1" min="1" />
+                <button class="button" onclick="addToOrder('Handmade Advent Calendar', 40, document.getElementById('advent-quantity').value)">Add to Order</button>
+            </div>
+            <div class="product">
+                <img src="https://via.placeholder.com/400" alt="Quilted Reusable Bag">
+                <p><strong>Quilted Reusable Bag</strong></p>
+                <p>Price: $10</p>
+                <input type="number" id="bag-quantity" value="1" min="1" />
+                <button class="button" onclick="addToOrder('Quilted Reusable Bag', 10, document.getElementById('bag-quantity').value)">Add to Order</button>
+            </div>
+            <div class="product">
+                <img src="https://via.placeholder.com/400" alt="Ice Cream Pint Coozie">
+                <p><strong>Ice Cream Pint Coozie</strong></p>
+                <p>Price: $5</p>
+                <input type="number" id="coozie-quantity" value="1" min="1" />
+                <button class="button" onclick="addToOrder('Ice Cream Pint Coozie', 5, document.getElementById('coozie-quantity').value)">Add to Order</button>
+            </div>
         </section>
     </div>
 
@@ -148,22 +234,28 @@
         <p>&copy; 2025 Buabah's Craft Corner | Payment Methods: Venmo, Square</p>
     </footer>
 
-    <!-- Modal: Full Catalog -->
-    <div class="modal" id="catalogModal">
+    <!-- Modal: Order -->
+    <div class="order-modal" id="orderModal">
         <div class="modal-content">
-            <h2>Full Catalog</h2>
-            <img src="452258165_122192472710033273_6474129997334732477_n.jpg" 
-                 alt="Holiday Placemat and Coaster Set" 
-                 onerror="this.src='https://via.placeholder.com/400';">
-            <p><strong>Holiday Placemat and Coaster Set</strong></p>
-            <p>Price: $40</p>
-            <p>A beautiful set of holiday-themed placemats and coasters, perfect for your festive table!</p>
-            <button class="close-btn" onclick="closeModal()">Close</button>
+            <h2>Order Summary</h2>
+            <div id="order-summary" class="order-summary"></div>
+            <p class="error" id="error-message"></p>
+            <label for="customer-name">Customer Name:</label>
+            <input type="text" id="customer-name" placeholder="Your Name" />
+            <label for="phone-number">Phone Number:</label>
+            <input type="tel" id="phone-number" placeholder="Your Phone Number" />
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Your Email" />
+            <textarea id="special-instructions" placeholder="Special Instructions"></textarea>
+            <br />
+            <button class="clear-btn" onclick="clearOrder()">Clear Order</button>
+            <button class="cancel-btn" onclick="closeOrderModal()">Cancel</button>
+            <button class="submit-btn" onclick="submitOrder()">Submit Order</button>
         </div>
     </div>
 
     <!-- Modal: Contact Information -->
-    <div class="modal" id="contactModal">
+    <div class="contact-modal" id="contactModal">
         <div class="modal-content">
             <h2>Contact Us</h2>
             <p>Email: <a href="mailto:EmmaRebeka13@hotmail.com">EmmaRebeka13@hotmail.com</a></p>
@@ -173,36 +265,53 @@
     </div>
 
     <script>
-        // Function to open the catalog modal
-        function openModal() {
-            document.getElementById('catalogModal').style.display = 'flex';
+        let orderItems = [];
+        
+        function addToOrder(name, price, quantity) {
+            orderItems.push({ name, price, quantity: parseInt(quantity) });
+            updateOrderSummary();
+        }
+        
+        function updateOrderSummary() {
+            const orderSummaryDiv = document.getElementById('order-summary');
+            orderSummaryDiv.innerHTML = '';
+            let totalPrice = 0;
+            orderItems.forEach(item => {
+                const itemSummary = document.createElement('div');
+                itemSummary.innerHTML = `${item.name} x ${item.quantity} - $${item.price * item.quantity}`;
+                orderSummaryDiv.appendChild(itemSummary);
+                totalPrice += item.price * item.quantity;
+            });
+            orderSummaryDiv.innerHTML += `<strong>Total Price: $${totalPrice}</strong>`;
         }
 
-        // Function to close the catalog modal
-        function closeModal() {
-            document.getElementById('catalogModal').style.display = 'none';
+        function openOrderModal() {
+            document.getElementById('orderModal').style.display = 'flex';
+        }
+        
+        function closeOrderModal() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+        
+        function clearOrder() {
+            orderItems = [];
+            updateOrderSummary();
         }
 
-        // Function to open the contact modal
-        function openContactModal() {
-            document.getElementById('contactModal').style.display = 'flex';
-        }
-
-        // Function to close the contact modal
-        function closeContactModal() {
-            document.getElementById('contactModal').style.display = 'none';
-        }
-
-        // Optional: Close any modal when clicking outside the content
-        window.onclick = function(event) {
-            const catalogModal = document.getElementById('catalogModal');
-            const contactModal = document.getElementById('contactModal');
-            if (event.target === catalogModal) {
-                closeModal();
-            } else if (event.target === contactModal) {
-                closeContactModal();
+        function submitOrder() {
+            const customerName = document.getElementById('customer-name').value;
+            const phoneNumber = document.getElementById('phone-number').value;
+            const email = document.getElementById('email').value;
+            
+            if (!customerName || (!phoneNumber && !email)) {
+                document.getElementById('error-message').textContent = 'Name and either Phone Number or Email are required!';
+            } else {
+                // Submit the order logic here (you can integrate with a back-end if needed)
+                alert('Order submitted successfully!');
+                closeOrderModal();
             }
         }
     </script>
 </body>
 </html>
+
