@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buabah's Craft Corner</title>
     <style>
-        /* Previous styles remain the same until catalog-product */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -13,6 +12,8 @@
             background: linear-gradient(to bottom, #f0f8ff, #ffe4e1);
             color: #333;
             line-height: 1.6;
+            min-height: 100vh;
+            padding-bottom: 60px; /* Space for footer */
         }
 
         header {
@@ -41,6 +42,7 @@
             font-weight: bold;
             padding: 0.5rem;
             text-align: center;
+            cursor: pointer;
         }
 
         nav a:hover {
@@ -63,17 +65,39 @@
         .catalog-product {
             background: white;
             border-radius: 10px;
-            padding: 1rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .catalog-product:hover {
+            transform: translateY(-5px);
         }
 
         .catalog-product img {
             width: 100%;
-            height: 200px;
+            height: 250px;
             object-fit: cover;
-            border-radius: 5px;
+            border-radius: 8px;
             margin-bottom: 1rem;
+        }
+
+        .product-info {
+            margin: 1rem 0;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .product-price {
+            color: #5a189a;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin: 0.5rem 0;
         }
 
         .quantity-selector {
@@ -83,10 +107,20 @@
             margin: 1rem 0;
         }
 
+        .quantity-selector button {
+            background: #5a189a;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
         .quantity-selector input {
             width: 50px;
             text-align: center;
             margin: 0 0.5rem;
+            padding: 0.5rem;
         }
 
         .modal {
@@ -120,6 +154,22 @@
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
+            color: #333;
+        }
+
+        .contact-info {
+            text-align: left;
+            padding: 1rem;
+            line-height: 2;
+        }
+
+        .contact-info a {
+            color: #5a189a;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
         }
 
         #order-summary {
@@ -152,6 +202,25 @@
             bottom: 0;
             width: 100%;
         }
+
+        @media (max-width: 768px) {
+            .catalog-container {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                flex-direction: column;
+            }
+
+            nav a {
+                margin: 0.25rem 0;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 5vh auto;
+            }
+        }
     </style>
 </head>
 <body>
@@ -161,16 +230,16 @@
     </header>
 
     <nav>
-        <a href="#" onclick="openModal('catalogModal')">Full Catalog</a>
-        <a href="#" onclick="openModal('aboutModal')">All About Me</a>
-        <a href="#" onclick="openModal('quiltedModal')">Quilted</a>
-        <a href="#" onclick="openModal('sewnModal')">Sewn Goods</a>
-        <a href="#" onclick="openModal('householdModal')">Household Goods</a>
-        <a href="#" onclick="openModal('christmasModal')">Christmas Nook</a>
-        <a href="#" onclick="openModal('kidsModal')">Kids Corner</a>
-        <a href="#" onclick="openModal('customModal')">Yea, I Made That Custom Craft Inquiry</a>
-        <a href="#" onclick="openModal('orderModal')">Order</a>
-        <a href="#" onclick="openModal('contactModal')">Contact</a>
+        <a onclick="openModal('catalogModal')">Full Catalog</a>
+        <a onclick="openModal('aboutModal')">All About Me</a>
+        <a onclick="openModal('quiltedModal')">Quilted</a>
+        <a onclick="openModal('sewnModal')">Sewn Goods</a>
+        <a onclick="openModal('householdModal')">Household Goods</a>
+        <a onclick="openModal('christmasModal')">Christmas Nook</a>
+        <a onclick="openModal('kidsModal')">Kids Corner</a>
+        <a onclick="openModal('customModal')">Yea, I Made That Custom Craft Inquiry</a>
+        <a onclick="openModal('orderModal')">Order</a>
+        <a onclick="openModal('contactModal')">Contact</a>
     </nav>
 
     <div class="container">
@@ -178,8 +247,10 @@
         <div class="catalog-container">
             <div class="catalog-product">
                 <img src="/api/placeholder/400/320" alt="Suzies">
-                <h3>Suzies</h3>
-                <p>Price: $5</p>
+                <div class="product-info">
+                    <h3 class="product-title">Suzies</h3>
+                    <p class="product-price">$5</p>
+                </div>
                 <div class="quantity-selector">
                     <button onclick="decrementQuantity('suzies-qty')">-</button>
                     <input type="number" id="suzies-qty" value="1" min="1">
@@ -189,10 +260,13 @@
                     Add to Order
                 </button>
             </div>
+
             <div class="catalog-product">
                 <img src="/api/placeholder/400/320" alt="Handmade Advent Calendar">
-                <h3>Handmade Advent Calendar</h3>
-                <p>Price: $40</p>
+                <div class="product-info">
+                    <h3 class="product-title">Handmade Advent Calendar</h3>
+                    <p class="product-price">$40</p>
+                </div>
                 <div class="quantity-selector">
                     <button onclick="decrementQuantity('calendar-qty')">-</button>
                     <input type="number" id="calendar-qty" value="1" min="1">
@@ -205,17 +279,18 @@
         </div>
     </div>
 
-    <!-- Modals -->
+    <!-- Full Catalog Modal -->
     <div id="catalogModal" class="modal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal('catalogModal')">&times;</button>
             <h2>Full Catalog</h2>
             <div class="catalog-container">
-                <!-- Duplicate Featured Products -->
                 <div class="catalog-product">
                     <img src="/api/placeholder/400/320" alt="Suzies">
-                    <h3>Suzies</h3>
-                    <p>Price: $5</p>
+                    <div class="product-info">
+                        <h3 class="product-title">Suzies</h3>
+                        <p class="product-price">$5</p>
+                    </div>
                     <div class="quantity-selector">
                         <button onclick="decrementQuantity('suzies-catalog-qty')">-</button>
                         <input type="number" id="suzies-catalog-qty" value="1" min="1">
@@ -225,10 +300,13 @@
                         Add to Order
                     </button>
                 </div>
+
                 <div class="catalog-product">
                     <img src="/api/placeholder/400/320" alt="Handmade Advent Calendar">
-                    <h3>Handmade Advent Calendar</h3>
-                    <p>Price: $40</p>
+                    <div class="product-info">
+                        <h3 class="product-title">Handmade Advent Calendar</h3>
+                        <p class="product-price">$40</p>
+                    </div>
                     <div class="quantity-selector">
                         <button onclick="decrementQuantity('calendar-catalog-qty')">-</button>
                         <input type="number" id="calendar-catalog-qty" value="1" min="1">
@@ -238,10 +316,56 @@
                         Add to Order
                     </button>
                 </div>
+
+                <div class="catalog-product">
+                    <img src="/api/placeholder/400/320" alt="Ice Cream Pint Coozie">
+                    <div class="product-info">
+                        <h3 class="product-title">Ice Cream Pint Coozie</h3>
+                        <p class="product-price">$5</p>
+                    </div>
+                    <div class="quantity-selector">
+                        <button onclick="decrementQuantity('coozie-qty')">-</button>
+                        <input type="number" id="coozie-qty" value="1" min="1">
+                        <button onclick="incrementQuantity('coozie-qty')">+</button>
+                    </div>
+                    <button class="button" onclick="addToOrder('Ice Cream Pint Coozie', 5, document.getElementById('coozie-qty').value)">
+                        Add to Order
+                    </button>
+                </div>
+
+                <div class="catalog-product">
+                    <img src="/api/placeholder/400/320" alt="Reusable Quilted Bag">
+                    <div class="product-info">
+                        <h3 class="product-title">Reusable Quilted Bag</h3>
+                        <p class="product-price">$10</p>
+                    </div>
+                    <div class="quantity-selector">
+                        <button onclick="decrementQuantity('bag-qty')">-</button>
+                        <input type="number" id="bag-qty" value="1" min="1">
+                        <button onclick="incrementQuantity('bag-qty')">+</button>
+                    </div>
+                    <button class="button" onclick="addToOrder('Reusable Quilted Bag', 10, document.getElementById('bag-qty').value)">
+                        Add to Order
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('contactModal')">&times;</button>
+            <h2>Contact Us</h2>
+            <div class="contact-info">
+                <p><strong>Owner:</strong> Mary Hammond</p>
+                <p><strong>Phone:</strong> <a href="tel:7044009912">704-400-9912</a></p>
+                <p><strong>Email:</strong> <a href="mailto:buabahscrafts@gmail.com">buabahscrafts@gmail.com</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Modal -->
     <div id="orderModal" class="modal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal('orderModal')">&times;</button>
@@ -270,7 +394,7 @@
         </div>
     </div>
 
-    <!-- Additional Modals -->
+    <!-- Other Modals -->
     <div id="aboutModal" class="modal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal('aboutModal')">&times;</button>
@@ -327,14 +451,6 @@
         </div>
     </div>
 
-    <div id="contactModal" class="modal">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeModal('contactModal')">&times;</button>
-            <h2>Contact Us</h2>
-            <p>Contact information...</p>
-        </div>
-    </div>
-
     <footer>
         <p>&copy; 2025 Buabah's Craft Corner | Payment Methods: Venmo, Square</p>
     </footer>
@@ -364,19 +480,22 @@
 
         function addToOrder(name, price, quantity) {
             quantity = parseInt(quantity);
-            // Check if item already exists in order
             const existingItem = orderItems.find(item => item.name === name);
+            
             if (existingItem) {
                 existingItem.quantity += quantity;
             } else {
                 orderItems.push({ name, price, quantity });
             }
+            
             updateOrderSummary();
             alert(`Added ${quantity} ${name} to your order!`);
         }
 
         function updateOrderSummary() {
             const summary = document.getElementById('order-summary');
+            if (!summary) return;
+
             let html = '<h3>Order Items:</h3>';
             let total = 0;
             
@@ -385,12 +504,12 @@
                 total += itemTotal;
                 html += `
                     <div class="order-item">
-                        <p>${item.name} x ${item.quantity} - $${itemTotal}</p>
+                        <p>${item.name} x ${item.quantity} - $${itemTotal.toFixed(2)}</p>
                     </div>
                 `;
             });
             
-            html += `<h4>Total: $${total}</h4>`;
+            html += `<h4>Total: $${total.toFixed(2)}</h4>`;
             summary.innerHTML = html;
         }
 
@@ -414,12 +533,33 @@
                 alert('Please add items to your order first!');
                 return;
             }
+
+            const name = document.getElementById('customer-name').value;
+            const email = document.getElementById('customer-email').value;
+            const phone = document.getElementById('customer-phone').value;
+            const instructions = document.getElementById('special-instructions').value;
+
+            if (!name || (!email && !phone)) {
+                alert('Please provide your name and either email or phone number.');
+                return;
+            }
+
             // Here you would typically send the order to a server
+            console.log('Order submitted:', {
+                customer: { name, email, phone, instructions },
+                items: orderItems,
+                total: orderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0)
+            });
+
             alert('Order submitted successfully!');
             orderItems = [];
             updateOrderSummary();
             closeModal('orderModal');
+            document.getElementById('order-form').reset();
         };
+
+        // Initialize order summary on page load
+        document.addEventListener('DOMContentLoaded', updateOrderSummary);
     </script>
 </body>
 </html>
