@@ -286,7 +286,7 @@
             <h2>Full Catalog</h2>
             <div class="catalog-container">
                 <div class="catalog-product">
-                    <img src="/api/placeholder/400/320" alt="Suzies">
+                    <img src="suzies.jpg" alt="Suzies">
                     <div class="product-info">
                         <h3 class="product-title">Suzies</h3>
                         <p class="product-price">$5</p>
@@ -302,7 +302,7 @@
                 </div>
 
                 <div class="catalog-product">
-                    <img src="/api/placeholder/400/320" alt="Handmade Advent Calendar">
+                    <img src="advent calendar.jpg" alt="Handmade Advent Calendar">
                     <div class="product-info">
                         <h3 class="product-title">Handmade Advent Calendar</h3>
                         <p class="product-price">$40</p>
@@ -316,9 +316,25 @@
                         Add to Order
                     </button>
                 </div>
+                
+                    <div class="catalog-product">
+                    <img src="452258165_122192472710033273_6474129997334732477_n.jpg" alt="Holiday Placemat and Coaster Set">
+                    <div class="product-info">
+                        <h3 class="product-title">Holiday Placemat and Coaster Set</h3>
+                        <p class="product-price">$40</p>
+                    </div>
+                    <div class="quantity-selector">
+                        <button onclick="decrementQuantity('calendar-catalog-qty')">-</button>
+                        <input type="number" id="calendar-catalog-qty" value="1" min="1">
+                        <button onclick="incrementQuantity('calendar-catalog-qty')">+</button>
+                    </div>
+                    <button class="button" onclick="addToOrder('Handmade Advent Calendar', 40, document.getElementById('calendar-catalog-qty').value)">
+                        Add to Order
+                    </button>
+                </div>
 
                 <div class="catalog-product">
-                    <img src="/api/placeholder/400/320" alt="Ice Cream Pint Coozie">
+                    <img src="icrcream pint coozy.jpg" alt="Ice Cream Pint Coozie">
                     <div class="product-info">
                         <h3 class="product-title">Ice Cream Pint Coozie</h3>
                         <p class="product-price">$5</p>
@@ -334,7 +350,7 @@
                 </div>
 
                 <div class="catalog-product">
-                    <img src="/api/placeholder/400/320" alt="Reusable Quilted Bag">
+                    <img src="rersuablebag.jpg" alt="Reusable Quilted Bag">
                     <div class="product-info">
                         <h3 class="product-title">Reusable Quilted Bag</h3>
                         <p class="product-price">$10</p>
