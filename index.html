@@ -196,6 +196,13 @@
 
     <nav>
         <a href="javascript:void(0);" onclick="openCatalogModal()">Full Catalog</a>
+        <a href="javascript:void(0);" onclick="openAboutMeModal()">All About Me</a>
+        <a href="javascript:void(0);" onclick="openQuiltedModal()">Quilted</a>
+        <a href="javascript:void(0);" onclick="openSewnGoodsModal()">Sewn Goods</a>
+        <a href="javascript:void(0);" onclick="openHouseholdGoodsModal()">Household Goods</a>
+        <a href="javascript:void(0);" onclick="openChristmasNookModal()">Christmas Nook</a>
+        <a href="javascript:void(0);" onclick="openKidsCornerModal()">Kids Corner</a>
+        <a href="javascript:void(0);" onclick="openCustomCraftModal()">Yea, I Made That Custom Craft Inquiry</a>
         <a href="javascript:void(0);" onclick="openOrderModal()">Order</a>
         <a href="javascript:void(0);" onclick="openContactModal()">Contact</a>
     </nav>
@@ -233,24 +240,13 @@
                 <button class="close-btn" onclick="closeCatalogModal()">X</button>
             </div>
             <div class="catalog-container">
-                <!-- All Catalog Products -->
+                <!-- Full Catalog Products Here -->
+                <!-- Example Items -->
                 <div class="catalog-product">
                     <img src="holiday-placemat.jpg" alt="Holiday Placemat and Coaster Set">
                     <p><strong>Holiday Placemat and Coaster Set</strong></p>
                     <p>Price: $40</p>
                     <button class="button" onclick="addToOrder('Holiday Placemat and Coaster Set', 40, 1)">Add to Order</button>
-                </div>
-                <div class="catalog-product">
-                    <img src="suzies.jpg" alt="Suzies">
-                    <p><strong>Suzies</strong></p>
-                    <p>Price: $5</p>
-                    <button class="button" onclick="addToOrder('Suzies', 5, 1)">Add to Order</button>
-                </div>
-                <div class="catalog-product">
-                    <img src="advent-calendar.jpg" alt="Handmade Advent Calendar">
-                    <p><strong>Handmade Advent Calendar</strong></p>
-                    <p>Price: $40</p>
-                    <button class="button" onclick="addToOrder('Handmade Advent Calendar', 40, 1)">Add to Order</button>
                 </div>
                 <div class="catalog-product">
                     <img src="quilted-bag.jpg" alt="Quilted Reusable Bag">
@@ -265,6 +261,28 @@
                     <button class="button" onclick="addToOrder('Ice Cream Pint Coozie', 5, 1)">Add to Order</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal: About Me -->
+    <div class="about-me-modal" id="aboutMeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>About Me</h2>
+                <button class="close-btn" onclick="closeAboutMeModal()">X</button>
+            </div>
+            <p>Information about the creator of Buabah's Craft Corner.</p>
+        </div>
+    </div>
+
+    <!-- Modal: Custom Craft Inquiry -->
+    <div class="custom-craft-modal" id="customCraftModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Yea, I Made That Custom Craft Inquiry</h2>
+                <button class="close-btn" onclick="closeCustomCraftModal()">X</button>
+            </div>
+            <p>Information on how to inquire about custom crafted items.</p>
         </div>
     </div>
 
@@ -301,7 +319,7 @@
 
     <script>
         let orderItems = [];
-        
+
         function addToOrder(name, price, quantity) {
             orderItems.push({ name, price, quantity: parseInt(quantity) });
             updateOrderSummary();
@@ -349,10 +367,25 @@
             if (!customerName || (!phoneNumber && !email)) {
                 document.getElementById('error-message').textContent = 'Name and either Phone Number or Email are required!';
             } else {
-                // Submit the order logic (e.g., send email here)
                 alert('Order submitted successfully!');
                 closeOrderModal();
             }
+        }
+
+        function openAboutMeModal() {
+            document.getElementById('aboutMeModal').style.display = 'flex';
+        }
+
+        function closeAboutMeModal() {
+            document.getElementById('aboutMeModal').style.display = 'none';
+        }
+
+        function openCustomCraftModal() {
+            document.getElementById('customCraftModal').style.display = 'flex';
+        }
+
+        function closeCustomCraftModal() {
+            document.getElementById('customCraftModal').style.display = 'none';
         }
 
         function openContactModal() {
@@ -365,3 +398,4 @@
     </script>
 </body>
 </html>
+
