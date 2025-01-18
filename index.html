@@ -122,8 +122,8 @@
 
     <nav>
         <a href="#catalog">Catalog</a>
-        <a href="#contact">Contact</a>
         <a href="#cart">Cart</a>
+        <a href="javascript:void(0);" onclick="openContactModal()">Contact</a>
     </nav>
 
     <div class="container">
@@ -138,12 +138,6 @@
             <button class="button" onclick="openModal()">View Full Catalog</button>
         </section>
 
-        <section id="contact">
-            <h2>Contact Us</h2>
-            <p>Email: <a href="mailto:EmmaRebeka13@hotmail.com">EmmaRebeka13@hotmail.com</a></p>
-            <p>Phone: <a href="tel:9803333194">980-333-3194</a></p>
-        </section>
-
         <section id="cart">
             <h2>Your Cart</h2>
             <p>Your cart is currently empty. Start shopping from our catalog!</p>
@@ -154,7 +148,7 @@
         <p>&copy; 2025 Buabah's Craft Corner | Payment Methods: Venmo, Square</p>
     </footer>
 
-    <!-- Modal -->
+    <!-- Modal: Full Catalog -->
     <div class="modal" id="catalogModal">
         <div class="modal-content">
             <h2>Full Catalog</h2>
@@ -168,22 +162,45 @@
         </div>
     </div>
 
+    <!-- Modal: Contact Information -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <h2>Contact Us</h2>
+            <p>Email: <a href="mailto:EmmaRebeka13@hotmail.com">EmmaRebeka13@hotmail.com</a></p>
+            <p>Phone: <a href="tel:9803333194">980-333-3194</a></p>
+            <button class="close-btn" onclick="closeContactModal()">Close</button>
+        </div>
+    </div>
+
     <script>
-        // Function to open the modal
+        // Function to open the catalog modal
         function openModal() {
             document.getElementById('catalogModal').style.display = 'flex';
         }
 
-        // Function to close the modal
+        // Function to close the catalog modal
         function closeModal() {
             document.getElementById('catalogModal').style.display = 'none';
         }
 
-        // Optional: Close the modal when clicking outside the content
+        // Function to open the contact modal
+        function openContactModal() {
+            document.getElementById('contactModal').style.display = 'flex';
+        }
+
+        // Function to close the contact modal
+        function closeContactModal() {
+            document.getElementById('contactModal').style.display = 'none';
+        }
+
+        // Optional: Close any modal when clicking outside the content
         window.onclick = function(event) {
-            const modal = document.getElementById('catalogModal');
-            if (event.target === modal) {
+            const catalogModal = document.getElementById('catalogModal');
+            const contactModal = document.getElementById('contactModal');
+            if (event.target === catalogModal) {
                 closeModal();
+            } else if (event.target === contactModal) {
+                closeContactModal();
             }
         }
     </script>
