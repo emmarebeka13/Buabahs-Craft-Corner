@@ -413,12 +413,119 @@
     </div>
 
     <!-- Other Modals -->
-    <div id="aboutModal" class="modal">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeModal('aboutModal')">&times;</button>
-            <h2>All About Me</h2>
-            <p>Content about the creator...</p>
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-pink-50">
+      <header className="bg-purple-600 text-white p-4">
+        <div className="container mx-auto flex items-center">
+          <button 
+            onClick={() => window.history.back()} 
+            className="flex items-center text-white hover:text-purple-200 transition-colors"
+          >
+            <ArrowLeft className="mr-2" />
+            Back to Shop
+          </button>
         </div>
+      </header>
+
+      <main className="container mx-auto px-4 py-8 max-w-4xl">
+        <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
+          <h1 className="text-3xl font-bold text-purple-600 text-center mb-6">
+            Meet Buabah
+          </h1>
+
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            <div className="space-y-6">
+              <div>
+                <img 
+                  src="/api/placeholder/400/400" 
+                  alt="Mary (Buabah)" 
+                  className="rounded-lg shadow-md w-full"
+                />
+              </div>
+              
+              <div className="bg-purple-50 rounded-lg p-6">
+                <h2 className="text-xl font-semibold text-purple-600 mb-3">
+                  My Crafting Equipment
+                </h2>
+                <ul className="space-y-2">
+                  <li className="flex items-center">
+                    <span className="text-purple-600 mr-2"><Scissors size={16} /></span>
+                    Brother Sewing Machine with Basic Embroidery
+                  </li>
+                  <li className="flex items-center">
+                    <span className="text-purple-600 mr-2"><Scissors size={16} /></span>
+                    Brother Serger
+                  </li>
+                  <li className="flex items-center">
+                    <span className="text-purple-600 mr-2"><Tool size={16} /></span>
+                    Little Rebel & Grace Cuite Frame
+                  </li>
+                  <li className="flex items-center">
+                    <span className="text-purple-600 mr-2"><Tool size={16} /></span>
+                    Cricut Maker with Mini & 9x9 Press
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-purple-50 rounded-lg p-6">
+                <h2 className="text-xl font-semibold text-purple-600 mb-3">
+                  Contact Me
+                </h2>
+                <ul className="space-y-2">
+                  <li>📱 Phone: 704-400-9912</li>
+                  <li>📧 Email: buabahscrafts@gmail.com</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <section className="prose prose-purple">
+                <div className="bg-purple-50 rounded-lg p-6 mb-6">
+                  <h2 className="text-2xl font-semibold text-purple-600 mb-4">
+                    The Story Behind "Buabah"
+                  </h2>
+                  <p className="mb-4">
+                    My name is Mary, but I'm better known as Buabah. This unique name came from my oldest daughter, who never called me mommy, mom, or mum - I was and will always be Buabah. While it was tough to accept at first (after all, every mother wants to be "mommy," right?), I've completely embraced it. Now I have a second daughter, and it actually feels strange when she tries to call me mom!
+                  </p>
+                </div>
+
+                <div className="mb-6">
+                  <h3 className="text-xl font-semibold text-purple-600 mb-3">
+                    My Crafting Journey
+                  </h3>
+                  <p className="mb-4">
+                    Crafting is my form of therapy - there's something incredibly soothing about creating with your hands. I usually craft in my downtime, after the little one goes to bed. With my headphones on and a good show to binge-watch, I craft away. What started as a hobby has grown into something more. I began doing craft fairs about a year ago to support my crafting habit, and now I'm excited to expand online!
+                  </p>
+                  <p className="mb-4">
+                    While I'm not "artsy" (please don't ask me to draw anything!), I can craft the crap out of anything! Give me a pile of random stuff and a project, and I'll make it happen. My crafting journey began with making small things for family - my first quilts were rag quilts made for Christmas gifts. From there, my creativity evolved based on whatever inspired me at the time, but I always find myself back at my sewing machine.
+                  </p>
+                </div>
+
+                <div className="bg-purple-50 rounded-lg p-6 mb-6">
+                  <h3 className="text-xl font-semibold text-purple-600 mb-3">
+                    The "Sweat Shop"
+                  </h3>
+                  <p className="mb-4">
+                    My dining room has been lovingly renamed the "sweat shop" - it's where all the magic happens! I'm blessed with a husband and lifestyle that supports my passion for crafting and sewing. Over time, I've built up quite the collection of equipment, from my original Brother sewing machine to my newest addition, the Little Rebel quilting machine.
+                  </p>
+                </div>
+
+                <div className="mb-6">
+                  <h3 className="text-xl font-semibold text-purple-600 mb-3">
+                    Custom Projects
+                  </h3>
+                  <p>
+                    I love taking on all kinds of random crafting projects! From transforming Christmas sweatshirts into toddler dresses to creating unique Halloween costumes, birthday shirts, and custom team/coach gifts - I love bringing visions to life. If you have an idea that needs some crafting magic, let's talk! Check out my "Yeah, I Made That" section to see some of my custom work.
+                  </p>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer className="bg-purple-600 text-white p-4 text-center">
+        <p>&copy; 2025 Buabah's Craft Corner | Payment Methods: Venmo, Square</p>
+      </footer>
     </div>
 
     <div id="quiltedModal" class="modal">
