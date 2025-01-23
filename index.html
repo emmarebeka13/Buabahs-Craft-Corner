@@ -8,7 +8,9 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
         (function() {
+            // Initialize EmailJS with public key
             emailjs.init("neVuw5cOVToMeqYSv");
+            console.log("EmailJS initialized");
         })();
     </script>
     <style>
@@ -620,12 +622,14 @@
             };
 
             try {
+                console.log('Attempting to send email with params:', templateParams);
                 // Send email using EmailJS
                 const response = await emailjs.send(
                     'service_2otw3wd',
                     'template_gcu4vgv',
                     templateParams
                 );
+                console.log('EmailJS Response:', response);
 
                 alert('Order submitted successfully! You will receive a confirmation email shortly.');
                 orderItems = [];
@@ -634,7 +638,7 @@
                 document.getElementById('order-form').reset();
             } catch (error) {
                 console.error('EmailJS error:', error);
-                alert('Error submitting order. Please try again or contact us directly.');
+                alert('Error submitting order: ' + (error.text || error.message || 'Unknown error occurred. Please try again or contact us directly.'));
             } finally {
                 // Hide loading spinner
                 document.getElementById('loading-spinner').style.display = 'none';
