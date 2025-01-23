@@ -611,14 +611,22 @@
 
             // Prepare email template parameters
             const templateParams = {
-                from_name: name,
-                from_email: email,
-                from_phone: phone || 'Not provided',
-                special_instructions: instructions || 'None',
-                order_items: orderItemsText,
-                total_amount: `$${total.toFixed(2)}`,
                 to_name: 'Mary Hammond',
-                to_email: 'buabahscrafts@gmail.com'
+                customer_name: name,
+                customer_email: email,
+                customer_phone: phone || 'Not provided',
+                message: `Order Details:
+Name: ${name}
+Email: ${email}
+Phone: ${phone || 'Not provided'}
+
+Items:
+${orderItemsText}
+
+Total: ${total.toFixed(2)}
+
+Special Instructions:
+${instructions || 'None'}`
             };
 
             try {
