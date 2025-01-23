@@ -538,23 +538,46 @@
         }
 
         // Form submission
-        document.getElementById('order-form').onsubmit = function(e) {
-            e.preventDefault();
-            if (orderItems.length === 0) {
-                alert('Please add items to your order first!');
-                return;
-            }
+       document.getElementById('order-form').onsubmit = async function(e) {
+    e.preventDefault();  // Prevent the form from refreshing the page
+    if (orderItems.length === 0) {
+        alert('Please add items to your order first!');
+        return;
+    }
 
-            const name = document.getElementById('customer-name').value;
-            const email = document.getElementById('customer-email').value;
-            const phone = document.getElementById('customer-phone').value;
-            const instructions = document.getElementById('special-instructions').value;
+    // Collect customer details from the form
+    const name = document.getElementById('customer-name').value;
+    const email = document.getElementById('customer-email').value;
+    const phone = document.getElementById('customer-phone').value;
+    const instructions = document.getElementById('special-instructions').value;
 
-            if (!name || (!email && !phone)) {
-                alert('Please provide your name and either email or phone number.');
-                return;
-            }
+    if (!name || (!email && !phone)) {
+        alert('Please provide your name and either email or phone number.');
+        return;
+    }
 
+    // Prepare the order details for email
+    const orderDetails = {
+        customer: { name, email, phone, instructions },
+        items: orderItems,
+        total: orderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0)
+    };
+
+    // Call the function to send the email
+    const emailSent = await sendOrderEmail(orderDetails);
+
+    if (emailSent) {
+        alert('Order submitted successfully and email sent!');
+    } else {
+        alert('There was an issue sending the email.');
+    }
+
+    // Clear the order after sending the email
+    orderItems = [];
+    updateOrderSummary(); // Update the order summary on the page
+    closeModal('orderModal'); // Close the modal
+    document.getElementById('order-form').reset(); // Reset the form fields
+};
             // Here you would typically send the order to a server
             console.log('Order submitted:', {
                 customer: { name, email, phone, instructions },
@@ -568,6 +591,7 @@
             closeModal('orderModal');
             document.getElementById('order-form').reset();
         };
+        
 
         // Initialize order summary on page load
         document.addEventListener('DOMContentLoaded', updateOrderSummary);
