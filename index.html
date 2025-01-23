@@ -413,28 +413,6 @@
         </div>
     </div>
 
-    // Initialize EmailJS with your User ID
-emailjs.init("neVuw5cOVToMeqYSv");
-
-async function sendOrderEmail(orderDetails) {
-    try {
-        const response = await emailjs.send("service_2otw3wd", "template_gcu4vgv", {
-            customerName: orderDetails.customer.name,
-            customerEmail: orderDetails.customer.email,
-            customerPhone: orderDetails.customer.phone,
-            specialInstructions: orderDetails.customer.instructions || 'None',
-            orderItems: orderDetails.items.map(item => 
-                `${item.name} x ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`
-            ).join('\n'),
-            totalAmount: `$${orderDetails.total.toFixed(2)}`
-        });
-        return response.status === 200;
-    } catch (error) {
-        console.error("Email sending failed", error);
-        return false;
-    }
-}
-
     <!-- Other category modals -->
     <div id="quiltedModal" class="modal">
         <div class="modal-content">
